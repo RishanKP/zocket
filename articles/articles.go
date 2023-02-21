@@ -112,3 +112,36 @@ func Delete(c *gin.Context){
         "message":"article deleted",
     })
 }
+
+func Update(c *gin.Context){
+    id := c.Param("id")
+    var a Article
+
+    c.BindJSON(&a)
+
+    aid,err := strconv.Atoi(id)
+    if err !=nil {
+        c.JSON(400,gin.H{
+            "message":"invalid id",
+        })
+        
+        return
+    }
+    
+    pos,err := GetPosition(aid)
+    if err != nil{
+         c.JSON(400,gin.H{
+            "message":"article not found",
+        })
+
+        return
+    }
+
+    Articles[pos].Title = a.Title
+    Articles[pos].Author = a.Author
+    Articles[pos].Description = a.Description
+
+    c.JSON(200,gin.H{
+        "message":"article updated",
+    })
+}
