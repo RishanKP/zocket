@@ -19,7 +19,7 @@ type PointsTable struct{
     Teams []Team `json:"pointsTable"`
 }
 func ReadFile(c *gin.Context){
-    f,err := os.Open("/file.csv")
+    f,err := os.Open("/etc/secrets/file.csv")
     if err != nil{
         c.JSON(400,gin.H{
             "message":"error opening file",
